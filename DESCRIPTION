@@ -1,6 +1,6 @@
 Package: savvyExamples
 Title: Examples of savvy
-Version: 0.0.0
+Version: 0.0.1
 Authors@R: 
     person(given = "Hiroaki",
            family = "Yutani",
