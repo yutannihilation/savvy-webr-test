@@ -8,3 +8,5 @@
 src/.cargo
 src/rust/.cargo
 src/rust/vendor/
+
+.vscode
