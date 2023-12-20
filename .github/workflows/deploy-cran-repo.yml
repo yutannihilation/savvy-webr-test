@@ -50,7 +50,6 @@ jobs:
       - name: Build wasm repo
         uses: ./.actions/build-rwasm
         with:
-          packages: "savvyExamples"
           repo-path: _site
 
       - name: Upload Pages artifact
