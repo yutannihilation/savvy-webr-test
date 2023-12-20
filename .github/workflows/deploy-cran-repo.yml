@@ -50,6 +50,7 @@ jobs:
       - name: Build wasm repo
         uses: ./.actions/build-rwasm
         with:
+          packages: cli
           repo-path: _site
 
       - name: Upload Pages artifact
