@@ -1,0 +1,61 @@
+# Based on https://github.com/r-wasm/actions/blob/main/.github/workflows/deploy-cran-repo.yml
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+name: Deploy CRAN repo
+
+jobs:
+  deploy-cran-repo:
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
+
+
+    permissions:
+      repository-projects: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout calling repository
+        uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-emscripten
+
+      - name: Build wasm packages
+        uses: r-wasm/actions/build-rwasm@v1
+        with:
+            packages: cli
+
+      - name: Checkout r-wasm/actions repository
+        uses: actions/checkout@v4
+        with:
+          ref: v1
+          repository: r-wasm/actions
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .actions
+
+      - name: Build wasm repo
+        uses: ./.actions/build-rwasm
+        with:
+          packages: "savvyExamples"
+          repo-path: _site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
