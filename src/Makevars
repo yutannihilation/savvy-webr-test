@@ -10,8 +10,6 @@ all: C_clean
 $(SHLIB): $(STATLIB)
 
 $(STATLIB):
-	rustup toolchain install nightly
-	rustup target install $(TARGET)
 	CARGO_PROFILE_RELEASE_PANIC="abort" PATH="$(PATH):$(HOME)/.cargo/bin" \
 		cargo +nightly build --lib --release --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) \
 		--target $(TARGET) -Zbuild-std=panic_abort,std
