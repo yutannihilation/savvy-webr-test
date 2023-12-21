@@ -1,7 +1,7 @@
 # This repository is just a copy of sub-directory in [savvy's repository](https://github.com/yutannihilation/savvy) to try building package for WebR
 
 ```r
-webr::install("savvyExamples", repos = "https://yutannihilation.github.io/savvy-webr-test/repo")
+webr::install("savvyExamples", repos = "https://yutannihilation.github.io/savvy-webr-test/")
 
 library(savvyExamples)
 
