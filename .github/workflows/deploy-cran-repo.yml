@@ -35,7 +35,7 @@ jobs:
           targets: wasm32-unknown-emscripten
 
       - name: Build wasm packages
-        uses: r-wasm/actions/build-rwasm@v1
+        uses: yutannihilation/r-wasm-actions/build-rwasm@rust
         with:
             packages: "."
 
@@ -48,7 +48,7 @@ jobs:
           path: .actions
 
       - name: Build wasm repo
-        uses: ./.actions/build-rwasm
+        uses: yutannihilation/r-wasm-actions/build-rwasm@rust
         with:
           packages: "savvyExamples"
           repo-path: _site
