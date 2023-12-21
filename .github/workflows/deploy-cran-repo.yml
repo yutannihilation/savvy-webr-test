@@ -34,13 +34,10 @@ jobs:
         uses: yutannihilation/r-wasm-actions/build-rwasm@rust
         with:
           packages: "."
-          repo-path: site
 
-      - name: Remove src
+      - name: Check size
         run: |
-          du -sh site/src/*
-          mkdir _site/
-          cp -R site/src/ _site/
+          du -sh _site/*
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
