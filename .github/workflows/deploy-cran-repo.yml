@@ -33,6 +33,9 @@ jobs:
       - name: Build wasm packages
         uses: yutannihilation/r-wasm-actions/build-rwasm@rust
 
+      - name: Remove src
+        run: rm -r _site/src/
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
 
