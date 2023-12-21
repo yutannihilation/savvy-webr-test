@@ -30,28 +30,8 @@ jobs:
       - name: Checkout calling repository
         uses: actions/checkout@v4
 
-      - uses: dtolnay/rust-toolchain@nightly
-        with:
-          targets: wasm32-unknown-emscripten
-
       - name: Build wasm packages
         uses: yutannihilation/r-wasm-actions/build-rwasm@rust
-        with:
-            packages: "."
-
-      - name: Checkout r-wasm/actions repository
-        uses: actions/checkout@v4
-        with:
-          ref: v1
-          repository: r-wasm/actions
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: .actions
-
-      - name: Build wasm repo
-        uses: yutannihilation/r-wasm-actions/build-rwasm@rust
-        with:
-          packages: "savvyExamples"
-          repo-path: _site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
