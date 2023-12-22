@@ -1,5 +1,0 @@
-Package: savvyExamples
-Version: 0.0.1
-Suggests: testthat (>= 3.0.0)
-License: MIT + file LICENSE
-MD5sum: b5fd1fb9e627c547a77b781447f82339

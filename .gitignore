@@ -10,4 +10,4 @@ src/rust/.cargo
 src/rust/vendor/
 
 .vscode
-/repo/src
+/repo
