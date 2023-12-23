@@ -6,3 +6,4 @@
 ^\.git$
 
 ^repo$
+^src/Makevars.webr$
