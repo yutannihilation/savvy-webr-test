@@ -87,6 +87,11 @@ SEXP print_list__impl(SEXP x) {
     return handle_result(res);
 }
 
+SEXP hello__impl(void) {
+    SEXP res = hello();
+    return handle_result(res);
+}
+
 SEXP Person_new__impl(void) {
     SEXP res = Person_new();
     return handle_result(res);
@@ -170,6 +175,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"flip_logical__impl", (DL_FUNC) &flip_logical__impl, 1},
     {"or_logical__impl", (DL_FUNC) &or_logical__impl, 2},
     {"print_list__impl", (DL_FUNC) &print_list__impl, 1},
+    {"hello__impl", (DL_FUNC) &hello__impl, 0},
     {"Person_new__impl", (DL_FUNC) &Person_new__impl, 0},
     {"Person_set_name__impl", (DL_FUNC) &Person_set_name__impl, 2},
     {"Person_name__impl", (DL_FUNC) &Person_name__impl, 1},

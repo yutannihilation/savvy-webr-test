@@ -9,6 +9,7 @@ SEXP times_any_numeric(SEXP x, SEXP y);
 SEXP flip_logical(SEXP x);
 SEXP or_logical(SEXP x, SEXP y);
 SEXP print_list(SEXP x);
+SEXP hello(void);
 SEXP scalar_input_int(SEXP x);
 SEXP scalar_input_real(SEXP x);
 SEXP scalar_input_logical(SEXP x);

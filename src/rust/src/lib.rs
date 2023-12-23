@@ -226,6 +226,16 @@ fn print_list(x: ListSxp) -> savvy::Result<()> {
     Ok(())
 }
 
+#[savvy]
+/// Say Hello in Japanese
+///
+/// @export
+fn hello() -> savvy::Result<()> {
+    println!("こんにちは！");
+
+    Ok(())
+}
+
 struct Person {
     pub name: String,
 }

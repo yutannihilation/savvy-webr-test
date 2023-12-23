@@ -97,6 +97,13 @@ print_list <- function(x) {
   invisible(.Call(print_list__impl, x))
 }
 
+#' Say Hello in Japanese
+#'
+#' @export
+hello <- function() {
+  invisible(.Call(hello__impl))
+}
+
 
 scalar_input_int <- function(x) {
   invisible(.Call(scalar_input_int__impl, x))
