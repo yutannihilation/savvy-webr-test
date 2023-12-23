@@ -10,4 +10,3 @@
 ^src/.cargo$
 ^src/rust/.cargo$
 ^src/rust/.vscode$
-^src/Makevars.webr$

@@ -30,10 +30,6 @@ jobs:
       - name: Checkout calling repository
         uses: actions/checkout@v4
 
-      - name: Tweak
-        run: |
-          mv src/Makevars.webr src/Makevars
-
       - name: Build wasm packages
         uses: yutannihilation/r-wasm-actions/build-rwasm@rust
         with:
