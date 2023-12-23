@@ -1,4 +1,4 @@
-^savvy\.Rproj$
+^savvyExamples\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
@@ -6,4 +6,8 @@
 ^\.git$
 
 ^repo$
+
+^src/.cargo$
+^src/rust/.cargo$
+^src/rust/.vscode$
 ^src/Makevars.webr$
