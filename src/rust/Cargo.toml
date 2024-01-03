@@ -11,6 +11,3 @@ savvy = { git = "https://github.com/yutannihilation/savvy" }
 savvy-ffi = { git = "https://github.com/yutannihilation/savvy" }
 
 [workspace]
-
-[profile.release]
-panic = "abort"
