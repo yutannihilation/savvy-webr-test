@@ -9,23 +9,8 @@ on:
 name: Deploy CRAN repo
 
 jobs:
-  deploy-cran-repo:
+  build:
     runs-on: ubuntu-latest
-
-    concurrency:
-      group: github-pages
-      cancel-in-progress: true
-
-
-    permissions:
-      repository-projects: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout calling repository
         uses: actions/checkout@v4
@@ -43,6 +28,25 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         if: github.ref == 'refs/heads/master'
 
+  deploy-cran-repo:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+
+    runs-on: ubuntu-latest
+    concurrency:
+      group: github-pages
+      cancel-in-progress: true
+
+    permissions:
+      repository-projects: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
