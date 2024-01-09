@@ -32,6 +32,96 @@ SEXP handle_result(SEXP res_) {
     return (SEXP)res;
 }
 
+SEXP scalar_input_int__impl(SEXP x) {
+    SEXP res = scalar_input_int(x);
+    return handle_result(res);
+}
+
+SEXP scalar_input_real__impl(SEXP x) {
+    SEXP res = scalar_input_real(x);
+    return handle_result(res);
+}
+
+SEXP scalar_input_logical__impl(SEXP x) {
+    SEXP res = scalar_input_logical(x);
+    return handle_result(res);
+}
+
+SEXP scalar_input_string__impl(SEXP x) {
+    SEXP res = scalar_input_string(x);
+    return handle_result(res);
+}
+
+SEXP scalar_output_int__impl(void) {
+    SEXP res = scalar_output_int();
+    return handle_result(res);
+}
+
+SEXP scalar_output_real__impl(void) {
+    SEXP res = scalar_output_real();
+    return handle_result(res);
+}
+
+SEXP scalar_output_logical__impl(void) {
+    SEXP res = scalar_output_logical();
+    return handle_result(res);
+}
+
+SEXP scalar_output_string__impl(void) {
+    SEXP res = scalar_output_string();
+    return handle_result(res);
+}
+
+SEXP sum_int__impl(SEXP x) {
+    SEXP res = sum_int(x);
+    return handle_result(res);
+}
+
+SEXP sum_real__impl(SEXP x) {
+    SEXP res = sum_real(x);
+    return handle_result(res);
+}
+
+SEXP rep_int_vec__impl(SEXP x) {
+    SEXP res = rep_int_vec(x);
+    return handle_result(res);
+}
+
+SEXP rep_int_slice__impl(SEXP x) {
+    SEXP res = rep_int_slice(x);
+    return handle_result(res);
+}
+
+SEXP rep_real_vec__impl(SEXP x) {
+    SEXP res = rep_real_vec(x);
+    return handle_result(res);
+}
+
+SEXP rep_real_slice__impl(SEXP x) {
+    SEXP res = rep_real_slice(x);
+    return handle_result(res);
+}
+
+SEXP rep_bool_vec__impl(SEXP x) {
+    SEXP res = rep_bool_vec(x);
+    return handle_result(res);
+}
+
+SEXP rep_bool_slice__impl(SEXP x) {
+    SEXP res = rep_bool_slice(x);
+    return handle_result(res);
+}
+
+SEXP rep_str_vec__impl(SEXP x) {
+    SEXP res = rep_str_vec(x);
+    return handle_result(res);
+}
+
+SEXP rep_str_slice__impl(SEXP x) {
+    SEXP res = rep_str_slice(x);
+    return handle_result(res);
+}
+
 SEXP safe_stop__impl(void) {
     SEXP res = safe_stop();
     return handle_result(res);
@@ -87,11 +177,6 @@ SEXP print_list__impl(SEXP x) {
     return handle_result(res);
 }
 
-SEXP hello__impl(void) {
-    SEXP res = hello();
-    return handle_result(res);
-}
-
 SEXP Person_new__impl(void) {
     SEXP res = Person_new();
     return handle_result(res);
@@ -112,58 +197,31 @@ SEXP Person_associated_function__impl(void) {
     return handle_result(res);
 }
 
-SEXP scalar_input_int__impl(SEXP x) {
-    SEXP res = scalar_input_int(x);
-    return handle_result(res);
-}
-
-SEXP scalar_input_real__impl(SEXP x) {
-    SEXP res = scalar_input_real(x);
-    return handle_result(res);
-}
-
-SEXP scalar_input_logical__impl(SEXP x) {
-    SEXP res = scalar_input_logical(x);
-    return handle_result(res);
-}
-
-SEXP scalar_input_string__impl(SEXP x) {
-    SEXP res = scalar_input_string(x);
-    return handle_result(res);
-}
-
-SEXP scalar_output_int__impl(void) {
-    SEXP res = scalar_output_int();
-    return handle_result(res);
-}
-
-SEXP scalar_output_real__impl(void) {
-    SEXP res = scalar_output_real();
-    return handle_result(res);
-}
-
-SEXP scalar_output_logical__impl(void) {
-    SEXP res = scalar_output_logical();
-    return handle_result(res);
-}
-
-SEXP scalar_output_string__impl(void) {
-    SEXP res = scalar_output_string();
-    return handle_result(res);
-}
-
-SEXP sum_int__impl(SEXP x) {
-    SEXP res = sum_int(x);
-    return handle_result(res);
-}
-
-SEXP sum_real__impl(SEXP x) {
-    SEXP res = sum_real(x);
+SEXP my_integer__impl(SEXP x) {
+    SEXP res = my_integer(x);
     return handle_result(res);
 }
 
 
 static const R_CallMethodDef CallEntries[] = {
+    {"scalar_input_int__impl", (DL_FUNC) &scalar_input_int__impl, 1},
+    {"scalar_input_real__impl", (DL_FUNC) &scalar_input_real__impl, 1},
+    {"scalar_input_logical__impl", (DL_FUNC) &scalar_input_logical__impl, 1},
+    {"scalar_input_string__impl", (DL_FUNC) &scalar_input_string__impl, 1},
+    {"scalar_output_int__impl", (DL_FUNC) &scalar_output_int__impl, 0},
+    {"scalar_output_real__impl", (DL_FUNC) &scalar_output_real__impl, 0},
+    {"scalar_output_logical__impl", (DL_FUNC) &scalar_output_logical__impl, 0},
+    {"scalar_output_string__impl", (DL_FUNC) &scalar_output_string__impl, 0},
+    {"sum_int__impl", (DL_FUNC) &sum_int__impl, 1},
+    {"sum_real__impl", (DL_FUNC) &sum_real__impl, 1},
+    {"rep_int_vec__impl", (DL_FUNC) &rep_int_vec__impl, 1},
+    {"rep_int_slice__impl", (DL_FUNC) &rep_int_slice__impl, 1},
+    {"rep_real_vec__impl", (DL_FUNC) &rep_real_vec__impl, 1},
+    {"rep_real_slice__impl", (DL_FUNC) &rep_real_slice__impl, 1},
+    {"rep_bool_vec__impl", (DL_FUNC) &rep_bool_vec__impl, 1},
+    {"rep_bool_slice__impl", (DL_FUNC) &rep_bool_slice__impl, 1},
+    {"rep_str_vec__impl", (DL_FUNC) &rep_str_vec__impl, 1},
+    {"rep_str_slice__impl", (DL_FUNC) &rep_str_slice__impl, 1},
     {"safe_stop__impl", (DL_FUNC) &safe_stop__impl, 0},
     {"raise_error__impl", (DL_FUNC) &raise_error__impl, 0},
     {"to_upper__impl", (DL_FUNC) &to_upper__impl, 1},
@@ -175,21 +233,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"flip_logical__impl", (DL_FUNC) &flip_logical__impl, 1},
     {"or_logical__impl", (DL_FUNC) &or_logical__impl, 2},
     {"print_list__impl", (DL_FUNC) &print_list__impl, 1},
-    {"hello__impl", (DL_FUNC) &hello__impl, 0},
     {"Person_new__impl", (DL_FUNC) &Person_new__impl, 0},
     {"Person_set_name__impl", (DL_FUNC) &Person_set_name__impl, 2},
     {"Person_name__impl", (DL_FUNC) &Person_name__impl, 1},
     {"Person_associated_function__impl", (DL_FUNC) &Person_associated_function__impl, 0},
-    {"scalar_input_int__impl", (DL_FUNC) &scalar_input_int__impl, 1},
-    {"scalar_input_real__impl", (DL_FUNC) &scalar_input_real__impl, 1},
-    {"scalar_input_logical__impl", (DL_FUNC) &scalar_input_logical__impl, 1},
-    {"scalar_input_string__impl", (DL_FUNC) &scalar_input_string__impl, 1},
-    {"scalar_output_int__impl", (DL_FUNC) &scalar_output_int__impl, 0},
-    {"scalar_output_real__impl", (DL_FUNC) &scalar_output_real__impl, 0},
-    {"scalar_output_logical__impl", (DL_FUNC) &scalar_output_logical__impl, 0},
-    {"scalar_output_string__impl", (DL_FUNC) &scalar_output_string__impl, 0},
-    {"sum_int__impl", (DL_FUNC) &sum_int__impl, 1},
-    {"sum_real__impl", (DL_FUNC) &sum_real__impl, 1},
+    {"my_integer__impl", (DL_FUNC) &my_integer__impl, 1},
     {NULL, NULL, 0}
 };
 
