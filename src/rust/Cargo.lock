@@ -44,18 +44,18 @@ dependencies = [
 [[package]]
 name = "savvy"
 version = "0.2.6"
-source = "git+https://github.com/yutannihilation/savvy#34e77b08b4674f1bde4bc0cdc2d4162c12da7f41"
+source = "git+https://github.com/yutannihilation/savvy?branch=webr#8d4ed14bf022592b8a9a8f1ebd0578e7b1e53d78"
 dependencies = [
  "cc",
  "once_cell",
- "savvy-ffi",
+ "savvy-ffi 0.2.6 (git+https://github.com/yutannihilation/savvy?branch=webr)",
  "savvy-macro",
 ]
 
 [[package]]
 name = "savvy-bindgen"
 version = "0.2.6"
-source = "git+https://github.com/yutannihilation/savvy#34e77b08b4674f1bde4bc0cdc2d4162c12da7f41"
+source = "git+https://github.com/yutannihilation/savvy?branch=webr#8d4ed14bf022592b8a9a8f1ebd0578e7b1e53d78"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -65,12 +65,17 @@ dependencies = [
 [[package]]
 name = "savvy-ffi"
 version = "0.2.6"
+source = "git+https://github.com/yutannihilation/savvy?branch=webr#8d4ed14bf022592b8a9a8f1ebd0578e7b1e53d78"
+
+[[package]]
+name = "savvy-ffi"
+version = "0.2.6"
 source = "git+https://github.com/yutannihilation/savvy#34e77b08b4674f1bde4bc0cdc2d4162c12da7f41"
 
 [[package]]
 name = "savvy-macro"
 version = "0.2.6"
-source = "git+https://github.com/yutannihilation/savvy#34e77b08b4674f1bde4bc0cdc2d4162c12da7f41"
+source = "git+https://github.com/yutannihilation/savvy?branch=webr#8d4ed14bf022592b8a9a8f1ebd0578e7b1e53d78"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -83,7 +88,7 @@ name = "simple-savvy"
 version = "0.1.0"
 dependencies = [
  "savvy",
- "savvy-ffi",
+ "savvy-ffi 0.2.6 (git+https://github.com/yutannihilation/savvy)",
 ]
 
 [[package]]
