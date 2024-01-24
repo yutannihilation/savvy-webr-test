@@ -1,5 +1,8 @@
 #![allow(unused_variables)]
 
+mod attributes;
+pub use attributes::*;
+
 mod convert_from_rust_types;
 pub use convert_from_rust_types::*;
 
@@ -9,7 +12,10 @@ pub use error_handling::*;
 mod try_from;
 pub use try_from::*;
 
-use savvy::{r_print, savvy};
+mod init_vectors;
+pub use init_vectors::*;
+
+use savvy::{r_print, savvy, OwnedListSexp};
 
 use savvy::{
     IntegerSexp, ListSexp, LogicalSexp, OwnedIntegerSexp, OwnedLogicalSexp, OwnedRealSexp,
@@ -218,15 +224,58 @@ fn print_list(x: ListSexp) -> savvy::Result<()> {
             }
             TypedSexp::List(_) => "list".to_string(),
             TypedSexp::Null(_) => "NULL".to_string(),
+            TypedSexp::ExternalPointer(_) => "external pointer".to_string(),
             TypedSexp::Other(_) => "Unsupported".to_string(),
         };
 
         let name = if k.is_empty() { "(no name)" } else { k };
 
-        r_print(format!("{name}: {content}\n").as_str())?;
+        r_print!("{name}: {content}\n");
     }
 
     Ok(())
+}
+
+#[savvy]
+fn list_with_no_values() -> savvy::Result<savvy::Sexp> {
+    let mut out = OwnedListSexp::new(2, true)?;
+
+    out.set_name(0, "foo")?;
+    out.set_name(1, "bar")?;
+
+    out.into()
+}
+
+#[savvy]
+fn list_with_no_names() -> savvy::Result<savvy::Sexp> {
+    let mut out = OwnedListSexp::new(2, false)?;
+
+    let mut e1 = OwnedIntegerSexp::new(1)?;
+    e1[0] = 100;
+
+    let mut e2 = OwnedStringSexp::new(1)?;
+    e2.set_elt(0, "cool")?;
+
+    out.set_value(0, e1)?;
+    out.set_value(1, e2)?;
+
+    out.into()
+}
+
+#[savvy]
+fn list_with_names_and_values() -> savvy::Result<savvy::Sexp> {
+    let mut out = OwnedListSexp::new(2, true)?;
+
+    let mut e1 = OwnedIntegerSexp::new(1)?;
+    e1[0] = 100;
+
+    let mut e2 = OwnedStringSexp::new(1)?;
+    e2.set_elt(0, "cool")?;
+
+    out.set_name_and_value(0, "foo", e1)?;
+    out.set_name_and_value(1, "bar", e2)?;
+
+    out.into()
 }
 
 struct Person {

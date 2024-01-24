@@ -1,4 +1,13 @@
+SEXP get_class_int(SEXP x);
+SEXP get_names_int(SEXP x);
+SEXP get_dim_int(SEXP x);
+SEXP get_attr_int(SEXP x, SEXP attr);
+SEXP set_class_int(void);
+SEXP set_names_int(void);
+SEXP set_dim_int(void);
+SEXP set_attr_int(SEXP attr, SEXP value);
 SEXP scalar_input_int(SEXP x);
+SEXP scalar_input_usize(SEXP x);
 SEXP scalar_input_real(SEXP x);
 SEXP scalar_input_logical(SEXP x);
 SEXP scalar_input_string(SEXP x);
@@ -18,6 +27,9 @@ SEXP rep_str_vec(SEXP x);
 SEXP rep_str_slice(SEXP x);
 SEXP safe_stop(void);
 SEXP raise_error(void);
+SEXP new_int(SEXP size);
+SEXP new_real(SEXP size);
+SEXP new_bool(SEXP size);
 SEXP to_upper(SEXP x);
 SEXP add_suffix(SEXP x, SEXP y);
 SEXP times_two_int(SEXP x);
@@ -27,6 +39,9 @@ SEXP times_any_numeric(SEXP x, SEXP y);
 SEXP flip_logical(SEXP x);
 SEXP or_logical(SEXP x, SEXP y);
 SEXP print_list(SEXP x);
+SEXP list_with_no_values(void);
+SEXP list_with_no_names(void);
+SEXP list_with_names_and_values(void);
 SEXP my_integer(SEXP x);
 
 // methods and associated functions for Person
