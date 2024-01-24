@@ -3,7 +3,6 @@
 export(Person)
 export(add_suffix)
 export(flip_logical)
-export(hello)
 export(or_logical)
 export(print_list)
 export(times_any_int)

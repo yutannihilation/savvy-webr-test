@@ -32,8 +32,53 @@ SEXP handle_result(SEXP res_) {
     return (SEXP)res;
 }
 
+SEXP get_class_int__impl(SEXP x) {
+    SEXP res = get_class_int(x);
+    return handle_result(res);
+}
+
+SEXP get_names_int__impl(SEXP x) {
+    SEXP res = get_names_int(x);
+    return handle_result(res);
+}
+
+SEXP get_dim_int__impl(SEXP x) {
+    SEXP res = get_dim_int(x);
+    return handle_result(res);
+}
+
+SEXP get_attr_int__impl(SEXP x, SEXP attr) {
+    SEXP res = get_attr_int(x, attr);
+    return handle_result(res);
+}
+
+SEXP set_class_int__impl(void) {
+    SEXP res = set_class_int();
+    return handle_result(res);
+}
+
+SEXP set_names_int__impl(void) {
+    SEXP res = set_names_int();
+    return handle_result(res);
+}
+
+SEXP set_dim_int__impl(void) {
+    SEXP res = set_dim_int();
+    return handle_result(res);
+}
+
+SEXP set_attr_int__impl(SEXP attr, SEXP value) {
+    SEXP res = set_attr_int(attr, value);
+    return handle_result(res);
+}
+
 SEXP scalar_input_int__impl(SEXP x) {
     SEXP res = scalar_input_int(x);
+    return handle_result(res);
+}
+
+SEXP scalar_input_usize__impl(SEXP x) {
+    SEXP res = scalar_input_usize(x);
     return handle_result(res);
 }
 
@@ -132,6 +177,21 @@ SEXP raise_error__impl(void) {
     return handle_result(res);
 }
 
+SEXP new_int__impl(SEXP size) {
+    SEXP res = new_int(size);
+    return handle_result(res);
+}
+
+SEXP new_real__impl(SEXP size) {
+    SEXP res = new_real(size);
+    return handle_result(res);
+}
+
+SEXP new_bool__impl(SEXP size) {
+    SEXP res = new_bool(size);
+    return handle_result(res);
+}
+
 SEXP to_upper__impl(SEXP x) {
     SEXP res = to_upper(x);
     return handle_result(res);
@@ -177,6 +237,21 @@ SEXP print_list__impl(SEXP x) {
     return handle_result(res);
 }
 
+SEXP list_with_no_values__impl(void) {
+    SEXP res = list_with_no_values();
+    return handle_result(res);
+}
+
+SEXP list_with_no_names__impl(void) {
+    SEXP res = list_with_no_names();
+    return handle_result(res);
+}
+
+SEXP list_with_names_and_values__impl(void) {
+    SEXP res = list_with_names_and_values();
+    return handle_result(res);
+}
+
 SEXP Person_new__impl(void) {
     SEXP res = Person_new();
     return handle_result(res);
@@ -204,7 +279,16 @@ SEXP my_integer__impl(SEXP x) {
 
 
 static const R_CallMethodDef CallEntries[] = {
+    {"get_class_int__impl", (DL_FUNC) &get_class_int__impl, 1},
+    {"get_names_int__impl", (DL_FUNC) &get_names_int__impl, 1},
+    {"get_dim_int__impl", (DL_FUNC) &get_dim_int__impl, 1},
+    {"get_attr_int__impl", (DL_FUNC) &get_attr_int__impl, 2},
+    {"set_class_int__impl", (DL_FUNC) &set_class_int__impl, 0},
+    {"set_names_int__impl", (DL_FUNC) &set_names_int__impl, 0},
+    {"set_dim_int__impl", (DL_FUNC) &set_dim_int__impl, 0},
+    {"set_attr_int__impl", (DL_FUNC) &set_attr_int__impl, 2},
     {"scalar_input_int__impl", (DL_FUNC) &scalar_input_int__impl, 1},
+    {"scalar_input_usize__impl", (DL_FUNC) &scalar_input_usize__impl, 1},
     {"scalar_input_real__impl", (DL_FUNC) &scalar_input_real__impl, 1},
     {"scalar_input_logical__impl", (DL_FUNC) &scalar_input_logical__impl, 1},
     {"scalar_input_string__impl", (DL_FUNC) &scalar_input_string__impl, 1},
@@ -224,6 +308,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"rep_str_slice__impl", (DL_FUNC) &rep_str_slice__impl, 1},
     {"safe_stop__impl", (DL_FUNC) &safe_stop__impl, 0},
     {"raise_error__impl", (DL_FUNC) &raise_error__impl, 0},
+    {"new_int__impl", (DL_FUNC) &new_int__impl, 1},
+    {"new_real__impl", (DL_FUNC) &new_real__impl, 1},
+    {"new_bool__impl", (DL_FUNC) &new_bool__impl, 1},
     {"to_upper__impl", (DL_FUNC) &to_upper__impl, 1},
     {"add_suffix__impl", (DL_FUNC) &add_suffix__impl, 2},
     {"times_two_int__impl", (DL_FUNC) &times_two_int__impl, 1},
@@ -233,6 +320,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"flip_logical__impl", (DL_FUNC) &flip_logical__impl, 1},
     {"or_logical__impl", (DL_FUNC) &or_logical__impl, 2},
     {"print_list__impl", (DL_FUNC) &print_list__impl, 1},
+    {"list_with_no_values__impl", (DL_FUNC) &list_with_no_values__impl, 0},
+    {"list_with_no_names__impl", (DL_FUNC) &list_with_no_names__impl, 0},
+    {"list_with_names_and_values__impl", (DL_FUNC) &list_with_names_and_values__impl, 0},
     {"Person_new__impl", (DL_FUNC) &Person_new__impl, 0},
     {"Person_set_name__impl", (DL_FUNC) &Person_set_name__impl, 2},
     {"Person_name__impl", (DL_FUNC) &Person_name__impl, 1},

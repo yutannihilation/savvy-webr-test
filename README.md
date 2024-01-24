@@ -7,9 +7,6 @@ webr::install("savvyExamples", repos = "https://yutannihilation.github.io/savvy-
 
 library(savvyExamples)
 
-# This works fine!
-hello()
-
 # Returning error works fine, too!
 times_two_int("1")
 

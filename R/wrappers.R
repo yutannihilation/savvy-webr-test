@@ -3,6 +3,141 @@
 NULL
 
 
+get_class_int <- function(x) {
+  .Call(get_class_int__impl, x)
+}
+
+
+get_names_int <- function(x) {
+  .Call(get_names_int__impl, x)
+}
+
+
+get_dim_int <- function(x) {
+  .Call(get_dim_int__impl, x)
+}
+
+
+get_attr_int <- function(x, attr) {
+  .Call(get_attr_int__impl, x, attr)
+}
+
+
+set_class_int <- function() {
+  .Call(set_class_int__impl)
+}
+
+
+set_names_int <- function() {
+  .Call(set_names_int__impl)
+}
+
+
+set_dim_int <- function() {
+  .Call(set_dim_int__impl)
+}
+
+
+set_attr_int <- function(attr, value) {
+  .Call(set_attr_int__impl, attr, value)
+}
+
+
+scalar_input_int <- function(x) {
+  invisible(.Call(scalar_input_int__impl, x))
+}
+
+
+scalar_input_usize <- function(x) {
+  invisible(.Call(scalar_input_usize__impl, x))
+}
+
+
+scalar_input_real <- function(x) {
+  invisible(.Call(scalar_input_real__impl, x))
+}
+
+
+scalar_input_logical <- function(x) {
+  invisible(.Call(scalar_input_logical__impl, x))
+}
+
+
+scalar_input_string <- function(x) {
+  invisible(.Call(scalar_input_string__impl, x))
+}
+
+
+scalar_output_int <- function() {
+  .Call(scalar_output_int__impl)
+}
+
+
+scalar_output_real <- function() {
+  .Call(scalar_output_real__impl)
+}
+
+
+scalar_output_logical <- function() {
+  .Call(scalar_output_logical__impl)
+}
+
+
+scalar_output_string <- function() {
+  .Call(scalar_output_string__impl)
+}
+
+
+sum_int <- function(x) {
+  .Call(sum_int__impl, x)
+}
+
+
+sum_real <- function(x) {
+  .Call(sum_real__impl, x)
+}
+
+
+rep_int_vec <- function(x) {
+  .Call(rep_int_vec__impl, x)
+}
+
+
+rep_int_slice <- function(x) {
+  .Call(rep_int_slice__impl, x)
+}
+
+
+rep_real_vec <- function(x) {
+  .Call(rep_real_vec__impl, x)
+}
+
+
+rep_real_slice <- function(x) {
+  .Call(rep_real_slice__impl, x)
+}
+
+
+rep_bool_vec <- function(x) {
+  .Call(rep_bool_vec__impl, x)
+}
+
+
+rep_bool_slice <- function(x) {
+  .Call(rep_bool_slice__impl, x)
+}
+
+
+rep_str_vec <- function(x) {
+  .Call(rep_str_vec__impl, x)
+}
+
+
+rep_str_slice <- function(x) {
+  .Call(rep_str_slice__impl, x)
+}
+
+
 safe_stop <- function() {
   invisible(.Call(safe_stop__impl))
 }
@@ -10,6 +145,21 @@ safe_stop <- function() {
 
 raise_error <- function() {
   .Call(raise_error__impl)
+}
+
+
+new_int <- function(size) {
+  .Call(new_int__impl, size)
+}
+
+
+new_real <- function(size) {
+  .Call(new_real__impl, size)
+}
+
+
+new_bool <- function(size) {
+  .Call(new_bool__impl, size)
 }
 
 #' Convert Input To Upper-Case
@@ -97,61 +247,24 @@ print_list <- function(x) {
   invisible(.Call(print_list__impl, x))
 }
 
-#' Say Hello in Japanese
-#'
-#' @export
-hello <- function() {
-  invisible(.Call(hello__impl))
+
+list_with_no_values <- function() {
+  .Call(list_with_no_values__impl)
 }
 
 
-scalar_input_int <- function(x) {
-  invisible(.Call(scalar_input_int__impl, x))
+list_with_no_names <- function() {
+  .Call(list_with_no_names__impl)
 }
 
 
-scalar_input_real <- function(x) {
-  invisible(.Call(scalar_input_real__impl, x))
+list_with_names_and_values <- function() {
+  .Call(list_with_names_and_values__impl)
 }
 
 
-scalar_input_logical <- function(x) {
-  invisible(.Call(scalar_input_logical__impl, x))
-}
-
-
-scalar_input_string <- function(x) {
-  invisible(.Call(scalar_input_string__impl, x))
-}
-
-
-scalar_output_int <- function() {
-  .Call(scalar_output_int__impl)
-}
-
-
-scalar_output_real <- function() {
-  .Call(scalar_output_real__impl)
-}
-
-
-scalar_output_logical <- function() {
-  .Call(scalar_output_logical__impl)
-}
-
-
-scalar_output_string <- function() {
-  .Call(scalar_output_string__impl)
-}
-
-
-sum_int <- function(x) {
-  .Call(sum_int__impl, x)
-}
-
-
-sum_real <- function(x) {
-  .Call(sum_real__impl, x)
+my_integer <- function(x) {
+  invisible(.Call(my_integer__impl, x))
 }
 
 #' A person with a name
