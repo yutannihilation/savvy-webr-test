@@ -7,7 +7,7 @@ edition = "2021"
 crate-type = ["staticlib"]
 
 [dependencies]
-savvy = { git = "https://github.com/yutannihilation/savvy", branch = "webr" }
+savvy = { git = "https://github.com/yutannihilation/savvy" }
 savvy-ffi = { git = "https://github.com/yutannihilation/savvy" }
 
 [workspace]
