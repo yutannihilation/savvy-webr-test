@@ -7,9 +7,9 @@ webr::install("savvyExamples", repos = "https://yutannihilation.github.io/savvy-
 
 library(savvyExamples)
 
-# Returning error works fine, too!
-times_two_int("1")
+times_two_int(1:10)
 
-# CAUTION: currently this freezes...
-times_two_int(1L)
+x <- Person$new()
+x$set_name("湯谷")
+x$name()
 ```
