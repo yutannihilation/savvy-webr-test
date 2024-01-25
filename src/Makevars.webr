@@ -12,7 +12,7 @@ $(SHLIB): $(STATLIB)
 
 $(STATLIB):
 	CARGO_PROFILE_RELEASE_PANIC="abort" PATH="$(PATH):$(HOME)/.cargo/bin" CC="$(CC)" CFLAGS="$(CFLAGS)" \
-		cargo +nightly build -vv --lib --release --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) \
+		cargo +nightly build --lib --release --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) \
 		--target $(TARGET) -Zbuild-std=panic_abort,std
 	exit
 
