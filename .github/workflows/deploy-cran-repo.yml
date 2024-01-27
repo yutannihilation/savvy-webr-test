@@ -15,19 +15,12 @@ jobs:
       - name: Checkout calling repository
         uses: actions/checkout@v4
 
-      - name: Checkout prqlr repository
-        uses: actions/checkout@v4
-        with:
-          repository: yutannihilation/prqlr
-          ref: savvy
-          path: prqlr
-
       - name: Build wasm packages
         uses: yutannihilation/r-wasm-actions/build-rwasm@main
         with:
           packages: |
             local::savvyExamples
-            local::prqlr
+            github::yutannihilation/prqlr@savvy
 
       - name: Check size
         run: |
