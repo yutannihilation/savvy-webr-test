@@ -1,6 +1,13 @@
-# This repository is just a copy of sub-directory in [savvy's repository](https://github.com/yutannihilation/savvy) to try building package for WebR
+# A repository for compiling Rust-powered R packages for webR
 
-You can try the following on [a demo of the webR REPL](https://webr.r-wasm.org/latest/).
+## Packages
+
+* `savvyExamples`: an example package for testing
+* [`prqlr`](https://github.com/eitsupi/prqlr)
+
+## Usages
+
+You can try running the following code on [a demo of the webR REPL](https://webr.r-wasm.org/latest/).
 
 ```r
 webr::install("savvyExamples", repos = "https://yutannihilation.github.io/savvy-webr-test/")
