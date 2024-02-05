@@ -4,6 +4,7 @@
 
 * `savvyExamples`: an example package for testing
 * [`prqlr`](https://github.com/eitsupi/prqlr)
+* [`string2path`](https://github.com/yutannihilation/string2path)
 
 ## Usages
 
