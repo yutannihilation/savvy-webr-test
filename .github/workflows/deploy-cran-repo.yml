@@ -21,6 +21,7 @@ jobs:
           packages: |
             local::savvyExamples
             github::eitsupi/prqlr
+            github::yutannihilation/string2path
 
       - name: Check size
         run: |
