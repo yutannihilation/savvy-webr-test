@@ -17,7 +17,8 @@ library(savvyExamples)
 
 times_two_int(1:10)
 
-x <- Person$new()
-x$set_name("湯谷")
+x <- Person()
+x$set_name("古来からのエド使い")
 x$name()
+#> [1] "古来からのエド使い"
 ```
