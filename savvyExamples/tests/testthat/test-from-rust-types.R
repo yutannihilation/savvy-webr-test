@@ -23,9 +23,15 @@ test_that("scalar functions reject non-scalar values and missing values", {
 test_that("function can return scalar value", {
   # no error
   expect_equal(scalar_output_int(), 1L)
+  expect_equal(scalar_output_int2(), 1L)
   expect_equal(scalar_output_real(), 1.3)
+  expect_equal(scalar_output_real2(), 1.3)
+  expect_equal(scalar_output_complex(), 1.0 + 1.0i)
+  expect_equal(scalar_output_complex2(),  1.0 + 1.0i)
   expect_equal(scalar_output_logical(), FALSE)
+  expect_equal(scalar_output_logical2(), FALSE)
   expect_equal(scalar_output_string(), "foo")
+  expect_equal(scalar_output_string2(), "foo")
 })
 
 test_that("sum functions", {
@@ -42,4 +48,11 @@ test_that("conversion from vectors", {
   expect_equal(rep_bool_slice(3L), c(TRUE, TRUE, TRUE))
   expect_equal(rep_str_vec(3L), c("foo", "foo", "foo"))
   expect_equal(rep_str_slice(3L), c("foo", "foo", "foo"))
+})
+
+test_that("user-defined structs", {
+  expect_error(get_name_external(NULL))
+  x <- Person$new()
+  class(x) <- "foo"
+  expect_error(get_name_external(x))
 })
