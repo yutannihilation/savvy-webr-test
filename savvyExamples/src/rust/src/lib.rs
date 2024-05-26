@@ -1,22 +1,31 @@
 #![allow(unused_variables)]
 
+mod altrep;
 mod attributes;
-pub use attributes::*;
-
+mod complex;
+mod consuming_type;
 mod convert_from_rust_types;
-pub use convert_from_rust_types::*;
-
+mod enum_support;
+mod environment;
 mod error_handling;
-pub use error_handling::*;
-
-mod try_from;
-pub use try_from::*;
-
-mod init_vectors;
-pub use init_vectors::*;
-
 mod function;
-pub use function::*;
+mod init_vectors;
+mod numeric;
+mod optional_arg;
+mod try_from_iter;
+
+// to test if the definition over multiple files is accepted.
+// cf. https://github.com/yutannihilation/savvy/issues/118
+mod separate_impl_definition;
+
+// to test modules are parsed properly
+// cf. https://github.com/yutannihilation/savvy/issues/147
+mod mod1;
+
+// This should not be parsed
+// mod mod2;
+
+mod log;
 
 use savvy::{r_print, savvy, OwnedListSexp};
 
@@ -26,6 +35,11 @@ use savvy::{
 };
 
 use savvy::sexp::na::NotAvailableValue;
+
+#[savvy]
+fn is_built_with_debug() -> savvy::Result<savvy::Sexp> {
+    cfg!(debug_assertions).try_into()
+}
 
 /// Convert Input To Upper-Case
 ///
@@ -38,7 +52,7 @@ fn to_upper(x: StringSexp) -> savvy::Result<savvy::Sexp> {
 
     for (i, e) in x.iter().enumerate() {
         if e.is_na() {
-            out.set_elt(i, <&str>::na())?;
+            out.set_na(i)?;
             continue;
         }
 
@@ -61,7 +75,7 @@ fn add_suffix(x: StringSexp, y: &str) -> savvy::Result<savvy::Sexp> {
 
     for (i, e) in x.iter().enumerate() {
         if e.is_na() {
-            out.set_elt(i, <&str>::na())?;
+            out.set_na(i)?;
             continue;
         }
 
@@ -82,7 +96,7 @@ fn times_two_int(x: IntegerSexp) -> savvy::Result<savvy::Sexp> {
 
     for (i, e) in x.iter().enumerate() {
         if e.is_na() {
-            out[i] = i32::na();
+            out.set_na(i)?;
         } else {
             out[i] = e * 2;
         }
@@ -103,7 +117,7 @@ fn times_any_int(x: IntegerSexp, y: i32) -> savvy::Result<savvy::Sexp> {
 
     for (i, e) in x.iter().enumerate() {
         if e.is_na() {
-            out[i] = i32::na();
+            out.set_na(i)?;
         } else {
             out[i] = e * y;
         }
@@ -118,12 +132,12 @@ fn times_any_int(x: IntegerSexp, y: i32) -> savvy::Result<savvy::Sexp> {
 /// @returns A numeric vector with values multiplied by 2.
 /// @export
 #[savvy]
-fn times_two_numeric(x: RealSexp) -> savvy::Result<savvy::Sexp> {
+fn times_two_real(x: RealSexp) -> savvy::Result<savvy::Sexp> {
     let mut out = OwnedRealSexp::new(x.len())?;
 
     for (i, e) in x.iter().enumerate() {
         if e.is_na() {
-            out[i] = f64::na();
+            out.set_na(i)?;
         } else {
             out[i] = e * 2.0;
         }
@@ -139,12 +153,12 @@ fn times_two_numeric(x: RealSexp) -> savvy::Result<savvy::Sexp> {
 /// @returns A real vector with values multiplied by `y`.
 /// @export
 #[savvy]
-fn times_any_numeric(x: RealSexp, y: f64) -> savvy::Result<savvy::Sexp> {
+fn times_any_real(x: RealSexp, y: f64) -> savvy::Result<savvy::Sexp> {
     let mut out = OwnedRealSexp::new(x.len())?;
 
     for (i, e) in x.iter().enumerate() {
         if e.is_na() {
-            out[i] = f64::na();
+            out.set_na(i)?;
         } else {
             out[i] = e * y;
         }
@@ -164,6 +178,22 @@ fn flip_logical(x: LogicalSexp) -> savvy::Result<savvy::Sexp> {
 
     for (i, e) in x.iter().enumerate() {
         out.set_elt(i, !e)?;
+    }
+
+    out.into()
+}
+
+// To handle NA values in a logical vector, use the raw values of i32, instead of bool.
+#[savvy]
+fn flip_logical_expert_only(x: LogicalSexp) -> savvy::Result<savvy::Sexp> {
+    let mut out = OwnedLogicalSexp::new(x.len())?;
+
+    for (i, e) in x.as_slice_raw().iter().enumerate() {
+        if e.is_na() {
+            out.set_na(i)?;
+        } else {
+            out.set_elt(i, *e != 1)?; // 1 means TRUE
+        }
     }
 
     out.into()
@@ -206,15 +236,21 @@ fn print_list(x: ListSexp) -> savvy::Result<()> {
             }
             TypedSexp::Real(x) => {
                 format!(
-                    "numeric [{}]",
+                    "double [{}]",
                     x.iter()
                         .map(|r| r.to_string())
                         .collect::<Vec<String>>()
                         .join(", ")
                 )
             }
-            TypedSexp::String(x) => {
-                format!("character [{}]", x.iter().collect::<Vec<&str>>().join(", "))
+            TypedSexp::Complex(x) => {
+                format!(
+                    "complex [{}]",
+                    x.iter()
+                        .map(|r| format!("{}+{}i", r.re, r.im))
+                        .collect::<Vec<String>>()
+                        .join(", ")
+                )
             }
             TypedSexp::Logical(x) => {
                 format!(
@@ -225,11 +261,14 @@ fn print_list(x: ListSexp) -> savvy::Result<()> {
                         .join(", ")
                 )
             }
+            TypedSexp::String(x) => {
+                format!("character [{}]", x.iter().collect::<Vec<&str>>().join(", "))
+            }
             TypedSexp::List(_) => "list".to_string(),
             TypedSexp::Null(_) => "NULL".to_string(),
             TypedSexp::ExternalPointer(_) => "external pointer".to_string(),
             TypedSexp::Function(_) => "function".to_string(),
-            TypedSexp::Other(_) => "Unsupported".to_string(),
+            _ => "Unsupported".to_string(),
         };
 
         let name = if k.is_empty() { "(no name)" } else { k };
@@ -282,18 +321,52 @@ fn list_with_names_and_values() -> savvy::Result<savvy::Sexp> {
     out.into()
 }
 
+/// A person with a name
+///
+/// @export
+#[savvy]
 struct Person {
     pub name: String,
 }
 
-/// A person with a name
-///
-/// @export
+#[savvy]
+#[allow(dead_code)]
+struct Person2 {
+    pub name: String,
+}
+
 #[savvy]
 impl Person {
     fn new() -> Self {
         Self {
             name: "".to_string(),
+        }
+    }
+
+    // Allow the same type name as Self
+    //
+    // https://github.com/yutannihilation/savvy/issues/136
+    fn new2() -> Person {
+        Person {
+            name: "".to_string(),
+        }
+    }
+
+    fn new_fallible() -> savvy::Result<Self> {
+        Ok(Self {
+            name: "".to_string(),
+        })
+    }
+
+    fn another_person(&self) -> savvy::Result<Person2> {
+        Ok(Person2 {
+            name: self.name.clone(),
+        })
+    }
+
+    fn new_with_name(name: &str) -> Self {
+        Self {
+            name: name.to_string(),
         }
     }
 
@@ -309,5 +382,49 @@ impl Person {
 
     fn associated_function() -> savvy::Result<savvy::Sexp> {
         "associated_function".try_into()
+    }
+}
+
+#[savvy]
+impl Person2 {
+    fn name(&self) -> savvy::Result<savvy::Sexp> {
+        let name = self.name.as_str();
+        name.try_into()
+    }
+}
+
+#[savvy]
+fn external_person_new() -> savvy::Result<Person> {
+    Ok(Person {
+        name: "".to_string(),
+    })
+}
+
+#[savvy]
+fn get_name_external(x: &Person) -> savvy::Result<savvy::Sexp> {
+    x.name()
+}
+
+#[savvy]
+fn set_name_external(x: &mut Person, name: &str) -> savvy::Result<()> {
+    x.set_name(name)
+}
+
+#[cfg(feature = "savvy-test")]
+mod tests {
+    #[test]
+    fn test_to_upper() -> savvy::Result<()> {
+        let x = savvy::OwnedStringSexp::try_from_slice(["foo", "bar", "BAZ", "ハート"])?;
+        let result = super::to_upper(x.as_read_only())?;
+        savvy::assert_eq_r_code(result, r#"c("FOO", "BAR", "BAZ", "ハート")"#);
+        Ok(())
+    }
+
+    #[test]
+    fn test_add_suffix() -> savvy::Result<()> {
+        let x = savvy::OwnedStringSexp::try_from_slice(["foo", "bar"])?;
+        let result = super::add_suffix(x.as_read_only(), "suf")?;
+        savvy::assert_eq_r_code(result, r#"c("foo_suf", "bar_suf")"#);
+        Ok(())
     }
 }
